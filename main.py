@@ -49,6 +49,43 @@ class Main(object):
 			sticky="W", row=2, column=0, columnspan=2, pady=3
 		)
 
+		# NUEVO HECHO FILA 3
+		self.new_fact_label = Label(
+			root, text='Nuevo hecho: ', padx=10, pady=1
+		)
+		self.new_fact_label.grid(
+			row=3, column=0, sticky="W", pady=3
+		)
+		self.add_new_fact_button = Button(
+			root,
+			text="Agregar hecho",
+			height=1,
+			command=self.add_new_fact,
+		)
+		self.add_new_fact_button.grid(
+			row=3, column=1, sticky="W"
+		)
+
+		# INPUTS FILA 4
+		self.fact1_input = Entry(
+			root
+		)
+		self.fact1_input.grid(
+			row=4, column=0, sticky="W", padx=10, pady=1
+		)
+		self.fact2_input = Entry(
+			root
+		)
+		self.fact2_input.grid(
+			row=4, column=1, sticky="W"
+		)
+		self.fact3_input = Entry(
+			root
+		)
+		self.fact3_input.grid(
+			row=4, column=2, sticky="W"
+		)
+
 		# Create rule editor where we can edit the rules we want to enter:
 
 		self.rule_editor = ScrolledText(
@@ -56,7 +93,7 @@ class Main(object):
 		)
 
 		self.rule_editor.grid(
-			sticky=W + E, row=3, column=0, columnspan=2, padx=10
+			sticky=W + E, row=5, column=4, columnspan=2, padx=10
 		)
 
 		self.rule_editor.config(wrap="word", undo=True)
@@ -67,13 +104,13 @@ class Main(object):
 
 		self.query_label = Label(root, text="Prolog Query:", padx=10, pady=1)
 
-		self.query_label.grid(sticky=W, row=4, column=0, columnspan=2, pady=3)
+		self.query_label.grid(sticky=W, row=6, column=0, columnspan=2, pady=3)
 
 		# Create the Prolog query editor we'll use to query our rules:
 
-		self.query_editor = Text(root, width=77, height=2, padx=10, pady=10)
+		self.query_editor = Text(root, height=1, padx=10, pady=10)
 
-		self.query_editor.grid(sticky=W, row=5, column=0, pady=3, padx=10)
+		self.query_editor.grid(sticky=W, row=7, column=0, pady=3, padx=10)
 
 		self.query_editor.config(wrap="word", undo=True)
 
@@ -88,7 +125,7 @@ class Main(object):
 			command=self.run_query,
 		)
 
-		self.run_button.grid(sticky=E, row=5, column=1, pady=3, padx=10)
+		self.run_button.grid(sticky=E, row=7, column=1, pady=3, padx=10)
 
 		# Create a solutions label
 
@@ -107,7 +144,7 @@ class Main(object):
 		)
 
 		self.solutions_display.grid(
-			row=7, column=0, columnspan=2, padx=10, pady=7
+			row=8, column=0, columnspan=2, padx=10, pady=7
 		)
 
 		# Finally, let's create the file menu

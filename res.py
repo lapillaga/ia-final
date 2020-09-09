@@ -12,13 +12,7 @@ self.title_facts.grid(
 	sticky="W", row=3, column=2, columnspan=2, pady=3
 )
 
-self.new_fact_label = Label(
-	root, text='Nuevo hecho: ', padx=10, pady=1
-)
 
-self.new_fact_label.grid(
-	row=4, column=0, sticky="W"
-)
 
 self.new_fact_input = Entry(
 	root, width=50
@@ -28,16 +22,6 @@ self.new_fact_input.grid(
 	row=4, column=1, pady=3
 )
 
-self.add_new_fact_button = Button(
-	root,
-	text="Agregar hecho",
-	height=1,
-	command=self.add_new_fact,
-)
-
-self.add_new_fact_button.grid(
-	row=4, column=1, padx=5, sticky="E"
-)
 
 self.load_two_button = Button(
 	root,

@@ -22,6 +22,7 @@ class Main(object):
 
 	def __init__(self, root_):
 		self.root = root_
+		self.rules_number = 1
 		self.file_path = None
 		self.root.title("Proyecto final Inteligencia Artifical II")
 
@@ -115,19 +116,41 @@ class Main(object):
 			row=4, column=5, padx=10
 		)
 
+		# REGLAS DE LA FILA 5
+		self.rule_label = Label(root, text="Reglas:", padx=10, pady=1)
+		self.rule_label.grid(sticky=W, row=5, column=0, columnspan=2, pady=3)
+
 		# Create rule editor where we can edit the rules we want to enter:
 		self.rule_editor = ScrolledText(
 			root, height=10, padx=10, pady=10
 		)
-
 		self.rule_editor.grid(
-			sticky=W + E, row=5, column=4, columnspan=2, padx=10
+			sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=5
 		)
-		#
-		# self.rule_editor.config(wrap="word", undo=True)
-		#
-		# self.rule_editor.focus()
-		#
+		self.rule_editor.config(wrap="word", undo=True)
+
+		# Input regla 1 FILA 6
+		self.rule1_label = Label(root, text="R1", padx=10, pady=1)
+		self.rule1_label.grid(sticky=W, row=6, column=0, pady=3)
+		self.rule1_input = Entry(root, width=30)
+		self.rule1_input.grid(row=6, column=1, columnspan=4, sticky="W", padx=10)
+
+		# Input regla 2 FILA 7
+		self.rule2_label = Label(root, text="R2", padx=10, pady=1)
+		self.rule2_label.grid(sticky=W, row=7, column=0, pady=3)
+		self.rule2_input = Entry(root, width=30)
+		self.rule2_input.grid(row=7, column=1, columnspan=4, sticky="W", padx=10)
+
+		# Input conclusion FILA 8
+		self.rule_conclusion_label = Label(root, text="C:".format(self.rules_number), padx=10)
+		self.rule_conclusion_label.grid(sticky=W, row=8, column=0, pady=3)
+		self.rule_conclusion_input = Entry(root, width=30)
+		self.rule_conclusion_input.grid(row=8, column=1, columnspan=4, sticky="W", padx=10)
+
+		# Boton de reglas FILA 9
+		self.add_rule_button = Button(root, text="AGREGAR", height=1, width=20, command=self.load_exercise_five)
+		self.add_rule_button.grid(row=9, column=0, columnspan=4, padx=10)
+
 		# # Create a query label:
 		#
 		# self.query_label = Label(root, text="Prolog Query:", padx=10, pady=1)

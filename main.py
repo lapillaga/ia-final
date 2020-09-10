@@ -5,7 +5,7 @@ import os
 
 from PIL import ImageTk, Image
 from inference.solver import Solver
-import numpy as np
+
 
 
 def is_file_path_selected(file_path):
@@ -146,7 +146,7 @@ class Main(tk.Frame):
 		self.combo["values"] = ["AND", "OR", "ENTONCES", " "]
 		self.combo.current(2)
 		self.combo.grid(column=3, row=6)
-		self.combo.bind("<<ComboboxSelected>>")
+
 
 		# Input regla 2 FILA 7
 		self.rule2_label = Label(root, text="R2", padx=10, pady=1)

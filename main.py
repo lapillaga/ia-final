@@ -106,11 +106,7 @@ class Main(tk.Frame):
 			text="Cargar ejercicio 2",
 			height=1,
 			width=20,
-<<<<<<< HEAD
-=======
 			command=self.load_exercise_two
->>>>>>> e0a44df9c45fdc99c5c0c3aa380adfdbd2afcaf7
-
 		)
 		self.load_two_button.grid(
 			row=4, column=4, padx=10

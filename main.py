@@ -1,4 +1,5 @@
-from tkinter import Tk, Text, Menu, filedialog, Label, Button, END, W, E, FALSE, Entry
+from tkinter import Tk, Text, Menu, filedialog, Label, Button, END, W, E, FALSE, Entry, ttk
+import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 
 from PIL import ImageTk, Image
@@ -18,9 +19,10 @@ def get_file_contents(file_path):
 	return file_contents
 
 
-class Main(object):
+class Main(tk.Frame):
 
-	def __init__(self, root_):
+	def __init__(self, root_, *args, **kwargs):
+		tk.Frame.__init__(self, *args, **kwargs)
 		self.root = root_
 		self.rules_number = 1
 		self.file_path = None
@@ -134,6 +136,10 @@ class Main(object):
 		self.rule1_label.grid(sticky=W, row=6, column=0, pady=3)
 		self.rule1_input = Entry(root, width=30)
 		self.rule1_input.grid(row=6, column=1, columnspan=4, sticky="W", padx=10)
+		self.combo = ttk.Combobox(self.root)
+		self.combo["values"] = ["AND", "OR"]
+		self.combo.current(0)
+		self.combo.grid(column=3, row=6)
 
 		# Input regla 2 FILA 7
 		self.rule2_label = Label(root, text="R2", padx=10, pady=1)

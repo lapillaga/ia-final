@@ -198,6 +198,7 @@ class Main(object):
 		file_menu.add_command(
 			label="Save As...", underline=5, command=self.save_file_as
 		)
+
 		file_menu.add_separator()
 		file_menu.add_command(label="Run", underline=1, command=self.run_query)
 		file_menu.add_separator()
@@ -293,6 +294,29 @@ class Main(object):
 			self.set_rule_editor_text(file_contents)
 			self.file_path = file_path
 
+	def open_file_two(self, file_path=None):
+		# Open a a new file dialog which allows the user to select a file to open
+		if file_path is None:
+			file_path = os.path.abspath("dos.pl")
+
+		if is_file_path_selected(file_path):
+			file_contents = get_file_contents(file_path)
+
+			# Set the rule editor text to contain the selected file contents
+			self.set_rule_editor_text(file_contents)
+			self.file_path = file_path
+
+	def open_file_five(self, file_path=None):
+		# Open a a new file dialog which allows the user to select a file to open
+		if file_path is None:
+			file_path = os.path.abspath("ejercicio5.pl")
+
+		if is_file_path_selected(file_path):
+			file_contents = get_file_contents(file_path)
+
+			# Set the rule editor text to contain the selected file contents
+			self.set_rule_editor_text(file_contents)
+			self.file_path = file_path
 	def save_file(self):
 		"""If we have specified a file path, save the file - otherwise, prompt the
 		user to specify the file location prior to saving the file """

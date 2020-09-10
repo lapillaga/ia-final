@@ -30,6 +30,7 @@ class Main(tk.Frame):
 		self.file_path = None
 		self.datos = None
 		self.prolog = []
+		self.temporal_rule = []
 		self.root.title("Proyecto final Inteligencia Artifical II")
 
 		# Images and title
@@ -79,6 +80,7 @@ class Main(tk.Frame):
 		self.add_new_fact_button.grid(
 			row=3, column=1, sticky="W"
 		)
+	
 
 		# INPUTS FILA 4
 		self.fact1_input = Entry(
@@ -141,9 +143,10 @@ class Main(tk.Frame):
 		self.rule1_input = Entry(root, width=30)
 		self.rule1_input.grid(row=6, column=1, columnspan=4, sticky="W", padx=10)
 		self.combo = ttk.Combobox(self.root)
-		self.combo["values"] = ["AND", "OR"]
-		self.combo.current(0)
+		self.combo["values"] = ["AND", "OR", "ENTONCES", " "]
+		self.combo.current(2)
 		self.combo.grid(column=3, row=6)
+		self.combo.bind("<<ComboboxSelected>>")
 
 		# Input regla 2 FILA 7
 		self.rule2_label = Label(root, text="R2", padx=10, pady=1)
@@ -160,6 +163,9 @@ class Main(tk.Frame):
 		# Boton de reglas FILA 9
 		self.add_rule_button = Button(root, text="AGREGAR", height=1, width=20, command=self.load_exercise_five)
 		self.add_rule_button.grid(row=9, column=0, columnspan=4, padx=10)
+        # Boton de reglas FILA 9
+		self.add_rule_button = Button(root, text="Borrar ultimo", height=1, width=20, command=self.delete_last)
+		self.add_rule_button.grid(row=9, column=1, columnspan=4, padx=10)
 
 		# CONSULTA FILA 10
 		self.query_label = Label(root, text="Ingresar consulta:", padx=10, pady=1)
@@ -188,18 +194,66 @@ class Main(tk.Frame):
 			oracion = f'{predicado}({sujeto}).'
 		else:
 			oracion = f'{verbo}({sujeto},{predicado}).'
+			# se agrega a la varible global self.problog los hechos
 		self.prolog.append(oracion)
+		# elimino los datos del scroll para volver a cargar
 		self.rule_editor.delete("1.0", END)
+		#se imprime el self.prolog para
 		self.rule_editor.insert("1.0", self.prolog)
+		self.fact1_input.delete(0,END)
+		self.fact2_input.delete(0,END)
+		self.fact3_input.delete(0,END)
 		pass
-		
-	
 
 	def load_exercise_two(self):
 		self.open_file_two()
 
+	def  delete_last(self):
+		self.prolog.pop()
+		print(self.prolog)
+		self.rule_editor.delete("1.0", END)
+		self.rule_editor.insert("1.0", self.prolog)
+
+
 	def load_exercise_five(self):
-		self.open_file_five()
+
+		sujeto= self.rule1_input.get()
+		verbo = self.rule2_input.get()
+		predicado = self.rule_conclusion_input.get()	
+		oracion = sujeto + verbo + predicado
+		print(oracion)
+		if oracion != "":
+			if verbo == "es":
+				oracion = f'{predicado}({sujeto})'
+			else:
+				oracion = f'{verbo}({sujeto},{predicado})'
+			
+			self.prolog.append(oracion)
+		
+
+		if self.combo.get() == "AND":
+				self.prolog.append(',')
+		elif self.combo.get() == "OR":
+			 var = ";"
+			 print(var.isalpha())
+			 self.prolog.append(';')
+		elif self.combo.get() == "ENTONCES":
+			 self.prolog.append(':-')
+		elif self.combo.get() == " ":
+				self.prolog.append('.')
+		
+		self.rule1_input.delete(0,END)
+		self.rule2_input.delete(0,END)
+		self.rule_conclusion_input.delete(0,END)
+
+
+		# elimino los datos del scroll para volver a cargar
+		self.rule_editor.delete("1.0", END)
+		#se imprime el self.prolog para
+		self.rule_editor.insert("1.0", self.prolog)
+		
+		#self.open_file_five()
+		pass
 
 	def create_file_menu(self):
 		"""Create a menu which will allow us to open / save our Prolog rules, run our

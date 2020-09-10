@@ -128,11 +128,7 @@ class Main(tk.Frame):
 
 		# Create rule editor where we can edit the rules we want to enter:
 		self.rule_editor = ScrolledText(
-<<<<<<< HEAD
-			root, height=10, padx=10, pady=10,
-=======
 			root, height=20, padx=10, pady=10
->>>>>>> e0a44df9c45fdc99c5c0c3aa380adfdbd2afcaf7
 		)
 		self.rule_editor.grid(
 			sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=5

@@ -1,11 +1,10 @@
-from tkinter import Tk, Text, Menu, filedialog, Label, Button, END, W, E, FALSE, Entry, ttk
+from tkinter import Tk, Text, Menu, filedialog, Label, Button, END, W, E, FALSE, Entry, ttk, messagebox
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 import os
 
 from PIL import ImageTk, Image
 from inference.solver import Solver
-
 
 
 def is_file_path_selected(file_path):
@@ -52,7 +51,7 @@ class Main(tk.Frame):
 
 		# TITULOS FILA 2
 		self.rule_editor_label = Label(
-			root, text="Hechos: ", padx=10, pady=1, 
+			root, text="Hechos: ", padx=10, pady=1,
 		)
 		self.rule_editor_label.grid(
 			sticky="W", row=2, column=0, columnspan=2, pady=10
@@ -80,11 +79,10 @@ class Main(tk.Frame):
 		self.add_new_fact_button.grid(
 			row=3, column=1, sticky="W"
 		)
-	
 
 		# INPUTS FILA 4
 		self.fact1_input = Entry(
-			root, 
+			root,
 		)
 		self.fact1_input.grid(
 			row=4, column=0, sticky="W", padx=10, pady=1
@@ -133,127 +131,134 @@ class Main(tk.Frame):
 			root, height=20, padx=10, pady=10
 		)
 		self.rule_editor.grid(
-			sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=5
+			sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=7
 		)
 		self.rule_editor.config(wrap="word", undo=True)
 
 		# Input regla 1 FILA 6
-		self.rule1_label = Label(root, text="R1", padx=10, pady=1)
+		self.rule1_label = Label(root, text="E1", padx=10, pady=1)
 		self.rule1_label.grid(sticky=W, row=6, column=0, pady=3)
 		self.rule1_input = Entry(root, width=30)
 		self.rule1_input.grid(row=6, column=1, columnspan=4, sticky="W", padx=10)
-		self.combo = ttk.Combobox(self.root)
-		self.combo["values"] = ["AND", "OR", "ENTONCES", " "]
-		self.combo.current(2)
-		self.combo.grid(column=3, row=6)
-
 
 		# Input regla 2 FILA 7
-		self.rule2_label = Label(root, text="R2", padx=10, pady=1)
+		self.rule2_label = Label(root, text="E2", padx=10, pady=1)
 		self.rule2_label.grid(sticky=W, row=7, column=0, pady=3)
 		self.rule2_input = Entry(root, width=30)
 		self.rule2_input.grid(row=7, column=1, columnspan=4, sticky="W", padx=10)
 
 		# Input conclusion FILA 8
-		self.rule_conclusion_label = Label(root, text="C:".format(self.rules_number), padx=10)
+		self.rule_conclusion_label = Label(root, text="E3", padx=10)
 		self.rule_conclusion_label.grid(sticky=W, row=8, column=0, pady=3)
 		self.rule_conclusion_input = Entry(root, width=30)
 		self.rule_conclusion_input.grid(row=8, column=1, columnspan=4, sticky="W", padx=10)
 
-		# Boton de reglas FILA 9
-		self.add_rule_button = Button(root, text="AGREGAR", height=1, width=20, command=self.load_exercise_five)
-		self.add_rule_button.grid(row=9, column=0, columnspan=4, padx=10)
-        # Boton de reglas FILA 9
-		self.add_rule_button = Button(root, text="Borrar ultimo", height=1, width=20, command=self.delete_last)
-		self.add_rule_button.grid(row=9, column=1, columnspan=4, padx=10)
+		# Input current rule FILA 9
+		self.current_rule_label = Label(root, text="", padx=10)
+		self.current_rule_label.grid(sticky=W, row=9, column=0, pady=3)
 
-		# CONSULTA FILA 10
+		# Combobox FILA 10
+		self.combo = ttk.Combobox(self.root)
+		self.combo["values"] = ["", "AND", "OR", "ENTONCES"]
+		self.combo.current(0)
+		self.combo.grid(column=0, row=10, pady=10, columnspan=4)
+
+		# Botones de reglas FILA 11
+		self.add_rule_button = Button(root, text="AGREGAR", height=1, width=15, command=self.add_new_rule)
+		self.add_rule_button.grid(row=11, column=0, columnspan=2, padx=10)
+		self.clean_button = Button(root, text="ELIMINAR", height=1, width=15, command=self.delete_last)
+		self.clean_button.grid(row=11, column=1, columnspan=2, padx=10)
+
+		# CONSULTA FILA 12
 		self.query_label = Label(root, text="Ingresar consulta:", padx=10, pady=1)
-		self.query_label.grid(sticky=W, row=10, column=0, columnspan=2, pady=3)
+		self.query_label.grid(sticky=W, row=12, column=0, columnspan=2, pady=3)
 
 		self.result_label = Label(root, text="Resultado consulta", padx=10, pady=1)
-		self.result_label.grid(sticky="W", row=10, column=3, columnspan=2, pady=10)
+		self.result_label.grid(sticky="W", row=12, column=3, columnspan=2, pady=10)
 
-		# INPUT Results
+		# INPUT Results FILA 13
 		self.query_editor = Text(root, width=20, height=1)
-		self.query_editor.grid(sticky="W", row=11, column=0, columnspan=2, padx=10)
+		self.query_editor.grid(sticky="W", row=13, column=0, columnspan=2, padx=10)
 		self.run_button = Button(root, text="CONSULTAR", height=1, width=20, command=self.run_query)
-		self.run_button.grid(row=11, column=1, columnspan=2, padx=10)
+		self.run_button.grid(row=13, column=1, columnspan=2, padx=10)
 		self.solutions_display = ScrolledText(root, width=60, height=1, padx=10, pady=10)
-		self.solutions_display.grid(sticky="W", row=11, column=3, columnspan=2, pady=10, padx=10)
+		self.solutions_display.grid(sticky="W", row=13, column=3, columnspan=2, pady=10, padx=10)
 
 		# Finally, let's create the file menu
 		self.menu_bar = self.create_file_menu()
 
 	def add_new_fact(self):
-		sujeto = self.fact1_input.get()
-		verbo = self.fact2_input.get()
-		predicado = self.fact3_input.get()
-		if verbo == "es":
-			print(verbo)
-			oracion = f'{predicado}({sujeto}).'
+		noun = self.fact1_input.get().lower()
+		verb = self.fact2_input.get().lower()
+		pred = self.fact3_input.get().lower()
+		if verb == "es":
+			subject = f'{pred}({noun}).'
 		else:
-			oracion = f'{verbo}({sujeto},{predicado}).'
-			# se agrega a la varible global self.problog los hechos
-		self.prolog.append(oracion)
-		# elimino los datos del scroll para volver a cargar
+			subject = f'{verb}({noun},{pred}).'
+
+		current_text = self.rule_editor.get('1.0', END)
 		self.rule_editor.delete("1.0", END)
-		#se imprime el self.prolog para
-		self.rule_editor.insert("1.0", self.prolog)
-		self.fact1_input.delete(0,END)
-		self.fact2_input.delete(0,END)
-		self.fact3_input.delete(0,END)
-		pass
+		current_text = current_text + subject
+		self.rule_editor.insert("1.0", current_text)
+		self.clean_fact_inputs()
+
+	def clean_fact_inputs(self):
+		self.fact1_input.delete(0, END)
+		self.fact2_input.delete(0, END)
+		self.fact3_input.delete(0, END)
 
 	def load_exercise_two(self):
 		self.open_file_two()
 
-	def  delete_last(self):
-		self.prolog.pop()
-		print(self.prolog)
-		self.rule_editor.delete("1.0", END)
-		self.rule_editor.insert("1.0", self.prolog)
-
+	def delete_last(self):
+		self.prolog.clear()
+		self.current_rule_label['text'] = ""
 
 	def load_exercise_five(self):
+		self.open_file_five()
 
-		sujeto= self.rule1_input.get()
-		verbo = self.rule2_input.get()
-		predicado = self.rule_conclusion_input.get()	
-		oracion = sujeto + verbo + predicado
-		print(oracion)
-		if oracion != "":
-			if verbo == "es":
-				oracion = f'{predicado}({sujeto})'
+	def add_new_rule(self):
+		noun = self.rule1_input.get()
+		verb = self.rule2_input.get()
+		pred = self.rule_conclusion_input.get()
+		condition = self.combo.get()
+		if noun != "" and verb != "" and pred != "" and condition != "":
+			if verb == "es":
+				subject = f'{pred}({noun})'
 			else:
-				oracion = f'{verbo}({sujeto},{predicado})'
-			
-			self.prolog.append(oracion)
-		
+				subject = f'{verb}({noun},{pred})'
+			self.prolog.append(subject)
 
-		if self.combo.get() == "AND":
+			if condition == "AND":
 				self.prolog.append(',')
-		elif self.combo.get() == "OR":
-			 var = ";"
-			 print(var.isalpha())
-			 self.prolog.append(';')
-		elif self.combo.get() == "ENTONCES":
-			 self.prolog.append(':-')
-		elif self.combo.get() == " ":
-				self.prolog.append('.')
-		
-		self.rule1_input.delete(0,END)
-		self.rule2_input.delete(0,END)
-		self.rule_conclusion_input.delete(0,END)
+			elif condition == "OR":
+				self.prolog.append(';')
+			elif condition == "ENTONCES":
+				last_condition = self.prolog.pop(-1)
+				self.prolog.pop(-1)
+				self.prolog.insert(0, last_condition)
+				self.prolog.insert(1, ':-')
 
+			self.clean_rule_inputs()
 
-		# elimino los datos del scroll para volver a cargar
-		self.rule_editor.delete("1.0", END)
-		#se imprime el self.prolog para
-		self.rule_editor.insert("1.0", self.prolog)
-		
-		#self.open_file_five()
-		pass
+			# se imprime el self.prolog para
+			final_rule = ""
+			for r in self.prolog:
+				final_rule = final_rule + r
+			self.current_rule_label['text'] = final_rule
+
+			if condition == "ENTONCES":
+				current_text = self.rule_editor.get('1.0', END)
+				self.rule_editor.delete("1.0", END)
+				current_text = current_text + final_rule
+				self.rule_editor.insert("1.0", current_text)
+		else:
+			messagebox.showerror("Error", "Complete las 3 entradas y seleccione la condición")
+
+	def clean_rule_inputs(self):
+		self.rule1_input.delete(0, END)
+		self.rule2_input.delete(0, END)
+		self.rule_conclusion_input.delete(0, END)
 
 	def create_file_menu(self):
 		"""Create a menu which will allow us to open / save our Prolog rules, run our
@@ -392,6 +397,7 @@ class Main(tk.Frame):
 			# Set the rule editor text to contain the selected file contents
 			self.set_rule_editor_text(file_contents)
 			self.file_path = file_path
+
 	def save_file(self):
 		"""If we have specified a file path, save the file - otherwise, prompt the
 		user to specify the file location prior to saving the file """

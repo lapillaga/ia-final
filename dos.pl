@@ -1,4 +1,3 @@
-
 rufian(bertoldo).
 rufian(bartolo).
 noble(romeo).
@@ -16,15 +15,3 @@ desea(S,X):-
 rapta(S,X):-
  rufian(S),
  desea(S,X).
-
-
-
-
-
-
-
-
-
-
-
-

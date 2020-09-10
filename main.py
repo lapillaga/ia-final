@@ -1,5 +1,6 @@
 from tkinter import Tk, Text, Menu, filedialog, Label, Button, END, W, E, FALSE, Entry
 from tkinter.scrolledtext import ScrolledText
+import os
 
 from PIL import ImageTk, Image
 from inference.solver import Solver
@@ -100,6 +101,7 @@ class Main(object):
 			height=1,
 			width=20,
 			command=self.load_exercise_two
+
 		)
 		self.load_two_button.grid(
 			row=4, column=4, padx=10
@@ -123,6 +125,8 @@ class Main(object):
 		self.rule_editor.grid(
 			sticky=W + E, row=5, column=4, columnspan=2, padx=10
 		)
+
+
 		#
 		# self.rule_editor.config(wrap="word", undo=True)
 		#
@@ -182,10 +186,10 @@ class Main(object):
 		pass
 
 	def load_exercise_two(self):
-		pass
+		self.open_file_two()
 
 	def load_exercise_five(self):
-		pass
+		self.open_file_five()
 
 	# def create_file_menu(self):
 	# 	"""Create a menu which will allow us to open / save our Prolog rules, run our
@@ -274,11 +278,11 @@ class Main(object):
 	# 	self.solutions_display.insert(END, str(exception) + "\n")
 	# 	self.set_not_busy()
 	#
-	# def set_rule_editor_text(self, text):
-	# 	self.rule_editor.delete(1.0, "end")
-	# 	self.rule_editor.insert(1.0, text)
-	# 	self.rule_editor.edit_modified(False)
-	#
+	def set_rule_editor_text(self, text):
+		self.rule_editor.delete(1.0, "end")
+		self.rule_editor.insert(1.0, text)
+		self.rule_editor.edit_modified(False)
+
 	# def set_busy(self):
 	# 	# Show a busy cursor and update the UI
 	# 	self.root.config(cursor="watch")
@@ -299,7 +303,32 @@ class Main(object):
 	# 		# Set the rule editor text to contain the selected file contents
 	# 		self.set_rule_editor_text(file_contents)
 	# 		self.file_path = file_path
-	#
+
+	def open_file_two(self, file_path=None):
+		# Open a a new file dialog which allows the user to select a file to open
+		if file_path is None:
+			file_path = os.path.abspath("dos.pl")
+
+		if is_file_path_selected(file_path):
+			file_contents = get_file_contents(file_path)
+
+			# Set the rule editor text to contain the selected file contents
+			self.set_rule_editor_text(file_contents)
+			self.file_path = file_path
+
+
+	def open_file_five(self, file_path=None):
+		# Open a a new file dialog which allows the user to select a file to open
+		if file_path is None:
+			file_path = os.path.abspath("ejercicio5.pl")
+
+		if is_file_path_selected(file_path):
+			file_contents = get_file_contents(file_path)
+
+			# Set the rule editor text to contain the selected file contents
+			self.set_rule_editor_text(file_contents)
+			self.file_path = file_path
+
 	# def save_file(self):
 	# 	"""If we have specified a file path, save the file - otherwise, prompt the
 	# 	user to specify the file location prior to saving the file """
@@ -343,6 +372,8 @@ class Main(object):
 	#
 	# def redo(self):
 	# 	self.rule_editor.edit_redo()
+	#
+
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ from tkinter.scrolledtext import ScrolledText
 
 from PIL import ImageTk, Image
 from inference.solver import Solver
+import numpy as np
 
 
 def is_file_path_selected(file_path):
@@ -23,6 +24,8 @@ class Main(object):
 	def __init__(self, root_):
 		self.root = root_
 		self.file_path = None
+		self.datos = None
+		self.prolog = []
 		self.root.title("Proyecto final Inteligencia Artifical II")
 
 		# Images and title
@@ -44,7 +47,7 @@ class Main(object):
 
 		# TITULOS FILA 2
 		self.rule_editor_label = Label(
-			root, text="Hechos: ", padx=10, pady=1
+			root, text="Hechos: ", padx=10, pady=1, 
 		)
 		self.rule_editor_label.grid(
 			sticky="W", row=2, column=0, columnspan=2, pady=10
@@ -75,7 +78,7 @@ class Main(object):
 
 		# INPUTS FILA 4
 		self.fact1_input = Entry(
-			root
+			root, 
 		)
 		self.fact1_input.grid(
 			row=4, column=0, sticky="W", padx=10, pady=1
@@ -99,7 +102,7 @@ class Main(object):
 			text="Cargar ejercicio 2",
 			height=1,
 			width=20,
-			command=self.load_exercise_two
+
 		)
 		self.load_two_button.grid(
 			row=4, column=4, padx=10
@@ -117,7 +120,7 @@ class Main(object):
 
 		# Create rule editor where we can edit the rules we want to enter:
 		self.rule_editor = ScrolledText(
-			root, height=10, padx=10, pady=10
+			root, height=10, padx=10, pady=10,
 		)
 
 		self.rule_editor.grid(
@@ -179,7 +182,20 @@ class Main(object):
 		# self.menu_bar = self.create_file_menu()
 
 	def add_new_fact(self):
+		sujeto = self.fact1_input.get()
+		verbo = self.fact2_input.get()
+		predicado = self.fact3_input.get()
+		if verbo == "es":
+			print(verbo)
+			oracion = f'{predicado}({sujeto}).'
+		else:
+			oracion = f'{verbo}({sujeto},{predicado}).'
+		self.prolog.append(oracion)
+		self.rule_editor.delete("1.0", END)
+		self.rule_editor.insert("1.0", self.prolog)
 		pass
+		
+	
 
 	def load_exercise_two(self):
 		pass

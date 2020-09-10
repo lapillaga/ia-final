@@ -160,7 +160,7 @@ class Main(object):
 
 		# INPUT Results
 		self.query_editor = Text(root, width=20, height=1)
-		self.query_editor.grid(sticky="W", row=11, column=0, columnspan=2, pady=10, padx=10)
+		self.query_editor.grid(sticky="W", row=11, column=0, columnspan=2, padx=10)
 		self.run_button = Button(root, text="CONSULTAR", height=1, width=20, command=self.run_query)
 		self.run_button.grid(row=11, column=1, columnspan=2, padx=10)
 		self.solutions_display = ScrolledText(root, width=60, height=1, padx=10, pady=10)

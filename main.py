@@ -122,7 +122,7 @@ class Main(object):
 
 		# Create rule editor where we can edit the rules we want to enter:
 		self.rule_editor = ScrolledText(
-			root, height=10, padx=10, pady=10
+			root, height=20, padx=10, pady=10
 		)
 		self.rule_editor.grid(
 			sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=5
@@ -151,12 +151,21 @@ class Main(object):
 		self.add_rule_button = Button(root, text="AGREGAR", height=1, width=20, command=self.load_exercise_five)
 		self.add_rule_button.grid(row=9, column=0, columnspan=4, padx=10)
 
-		# # Create a query label:
-		#
-		# self.query_label = Label(root, text="Prolog Query:", padx=10, pady=1)
-		#
-		# self.query_label.grid(sticky=W, row=6, column=0, columnspan=2, pady=3)
-		#
+		# CONSULTA FILA 10
+		self.query_label = Label(root, text="Ingresar consulta:", padx=10, pady=1)
+		self.query_label.grid(sticky=W, row=10, column=0, columnspan=2, pady=3)
+
+		self.result_label = Label(root, text="Resultado consulta", padx=10, pady=1)
+		self.result_label.grid(sticky="W", row=10, column=3, columnspan=2, pady=10)
+
+		# INPUT Results
+		self.query_input = Entry(root, width=30)
+		self.query_input.grid(sticky="W", row=11, column=0, columnspan=2, pady=10, padx=10)
+		self.search_button = Button(root, text="CONSULTAR", height=1, width=20, command=self.load_exercise_five)
+		self.search_button.grid(row=11, column=1, columnspan=2, padx=10)
+		self.result_input = Entry(root, width=60)
+		self.result_input.grid(sticky="W", row=11, column=3, columnspan=2, pady=10, padx=10)
+
 		# # Create the Prolog query editor we'll use to query our rules:
 		#
 		# self.query_editor = Text(root, height=1, padx=10, pady=10)

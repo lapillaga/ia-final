@@ -314,13 +314,13 @@ class Main(tk.Frame):
 		try:
 			solutions = solver.find_solutions(query_text)
 		except Exception as e:
-			self.handle_exception("Error processing prolog query.", str(e))
+			self.handle_exception("Error al procesar el query.", str(e))
 			return
 
 		# If our query returns a boolean, we simply display a 'Yes' or a 'No'
 		# depending on its value
 		if isinstance(solutions, bool):
-			self.solutions_display.insert(END, "Yes." if solutions else "No.")
+			self.solutions_display.insert(END, "Si." if solutions else "No.")
 
 		# Our solver returned a map, so we display the variable name to value mappings
 		elif isinstance(solutions, dict):
@@ -338,7 +338,7 @@ class Main(tk.Frame):
 
 			# We know we have no matching solutions in this instance so we provide
 			# relevant feedback
-			self.solutions_display.insert(END, "No solutions found.")
+			self.solutions_display.insert(END, "No se encontraron soluciones.")
 
 		self.set_not_busy()
 

@@ -238,6 +238,7 @@ class Main(tk.Frame):
 				self.prolog.pop(-1)
 				self.prolog.insert(0, last_condition)
 				self.prolog.insert(1, ':-')
+				self.prolog.append('.')
 
 			self.clean_rule_inputs()
 

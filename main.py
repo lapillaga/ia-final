@@ -130,7 +130,11 @@ class Main(tk.Frame):
 		self.rule_editor = ScrolledText(
 			root, height=20, padx=10, pady=10
 		)
-		self.rule_editor.grid(
+		# self.rule_editor.grid(
+		# 	sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=7
+		# )
+		self.text = Label(root, text="")
+		self.text.grid(
 			sticky=W + E, row=5, column=4, columnspan=2, padx=10, rowspan=7
 		)
 		self.rule_editor.config(wrap="word", undo=True)
@@ -200,6 +204,7 @@ class Main(tk.Frame):
 		self.rule_editor.delete("1.0", END)
 		current_text = current_text + subject
 		self.rule_editor.insert("1.0", current_text)
+		self.text['text'] = current_text
 		self.clean_fact_inputs()
 
 	def clean_fact_inputs(self):
@@ -253,6 +258,8 @@ class Main(tk.Frame):
 				self.rule_editor.delete("1.0", END)
 				current_text = current_text + final_rule
 				self.rule_editor.insert("1.0", current_text)
+				self.text['text'] = current_text
+
 		else:
 			messagebox.showerror("Error", "Complete las 3 entradas y seleccione la condición")
 
@@ -385,6 +392,7 @@ class Main(tk.Frame):
 
 			# Set the rule editor text to contain the selected file contents
 			self.set_rule_editor_text(file_contents)
+			self.text['text'] = file_contents
 			self.file_path = file_path
 
 	def open_file_five(self, file_path=None):
@@ -397,6 +405,7 @@ class Main(tk.Frame):
 
 			# Set the rule editor text to contain the selected file contents
 			self.set_rule_editor_text(file_contents)
+			self.text['text'] = file_contents
 			self.file_path = file_path
 
 	def save_file(self):
